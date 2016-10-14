@@ -9,13 +9,14 @@ class LoginController extends Controller
 {
 
     /**
-     * @Route("/login_form", name="login_form"  )
+     * @Route("/login_form/{msg}", name="login_form"  )
      */
-    public function loginFormAction()
+    public function loginFormAction( $msg=null )
     {
-        // replace this example code with whatever you need
 
-        $data = array();
+        $data = array(
+            'msg' => $msg
+        );
 
         return $this->render('login/login.html.twig', $data);
     }

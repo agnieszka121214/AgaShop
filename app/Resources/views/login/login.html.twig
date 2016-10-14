@@ -6,6 +6,11 @@
 <div class="container">
     <div class="login">
 
+
+        {% if msg %}
+            <p style="background: red" >{{ msg }}</p>
+        {% endif %}
+
         <form class="center-block"  action="{{ path( 'login' ) }}" method="post" >
             <div class="login-do" style="width: 500px;height:500px;margin: auto" >
                 <div class="login-mail"  >
