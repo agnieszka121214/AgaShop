@@ -14,7 +14,7 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="prise" type="float" column="prise" precision="10" scale="0" nullable="false"/>
+    <field name="price" type="float" column="price" precision="10" scale="0" nullable="false"/>
     <field name="image" type="string" column="image" length="50" nullable="false">
       <options>
         <option name="fixed"/>
@@ -25,5 +25,12 @@
         <option name="unsigned"/>
       </options>
     </field>
+
+    <one-to-many field="category" target-entity="AppBundle\Entity\Category" mapped-by="category_id">
+      <cascade>
+        <cascade-persist/>
+      </cascade>
+    </one-to-many>
+
   </entity>
 </doctrine-mapping>

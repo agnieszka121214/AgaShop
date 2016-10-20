@@ -31,7 +31,7 @@ class Product
      *
      * @ORM\Column(name="prise", type="float", precision=10, scale=0, nullable=false)
      */
-    private $prise;
+    private $price;
 
     /**
      * @var string
@@ -107,27 +107,27 @@ class Product
     }
 
     /**
-     * Set prise
+     * Set price
      *
-     * @param float $prise
+     * @param float $price
      *
      * @return Product
      */
-    public function setPrise($prise)
+    public function setPrice($price)
     {
-        $this->prise = $prise;
+        $this->price = $price;
 
         return $this;
     }
 
     /**
-     * Get prise
+     * Get price
      *
      * @return float
      */
-    public function getPrise()
+    public function getPrice()
     {
-        return $this->prise;
+        return $this->price;
     }
 
     /**
@@ -167,6 +167,12 @@ class Product
 
         return $this;
     }
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    public $category;
 
     /**
      * Get categoryId

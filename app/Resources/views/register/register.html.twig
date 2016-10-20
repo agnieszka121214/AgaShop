@@ -4,7 +4,7 @@
 
     <div class="container">
 
-        {% if msg %}
+        {% if msg is defined %}
             <p style="background: red" >{{ msg }}</p>
         {% endif %}
 
