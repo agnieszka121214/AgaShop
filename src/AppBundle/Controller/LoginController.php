@@ -48,13 +48,13 @@ class LoginController extends DefaultController
         $repository = $this->getDoctrine()->getRepository('AppBundle:Account');
         $em = $this->getDoctrine()->getManager();
 
-        //1. pobrac z okienka dane
+        //1. pobiera z okienka dane
         if(isset($_POST['login']))
         {
             //pobiera z bazy i przypisuje do zmiennej $name
             $email=$_POST['email'];
             $passowrd=$_POST['password'];
-            //TODO walidacja parametrów
+
 
 
             $account = $repository->findOneBy(
@@ -73,7 +73,7 @@ class LoginController extends DefaultController
             else
             {
                 //TODO wyswietlic blad jesli istnieje
-              //  return $this->redirect( 'login_form' );
+                //return $this->redirect( 'login_form' );
                 return $this->redirectToRoute("login_form",array('msg'=>"User nie istnieje"));
 
             }

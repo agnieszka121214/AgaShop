@@ -49,7 +49,7 @@ class DefaultController extends Controller
 
     public function onCreate(){
         /* */
-      //  session_start();
+        @session_start();
     }
 
     public function trace( $exp ){
