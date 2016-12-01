@@ -68,7 +68,14 @@ class LoginController extends DefaultController
             if($account)
             {
                 $this->login($account); //zalogowanego uzytkownika ID
-                return $this->redirectToRoute('products'); //wykonuje akcjie products i zwraca to co zwraca ta akcja
+                if($account->getIsAdmin())
+                {
+                    return $this->render('admin/admin_panel.html.twig');
+                }
+                else
+                {
+                    return $this->redirectToRoute('products'); //wykonuje akcjie products i zwraca to co zwraca ta akcja
+                }
             }
             else
             {

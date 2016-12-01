@@ -15,6 +15,12 @@ class DefaultController extends Controller
         return isset($_SESSION['logged_account_id']);
     }
 
+    public function isAdminLogged(){
+        if(!$this->isLogged()) return false;
+       // $this->trace( $this->getLoggedAccount());
+        return $this->getLoggedAccount()->getIsAdmin();
+    }
+
     public function login( $account ){
         $_SESSION['logged_account_id'] = $account->getId();
     }
@@ -22,6 +28,18 @@ class DefaultController extends Controller
     public function getLoggedAccount(){
         $repository = $this->getDoctrine()->getRepository('AppBundle:Account');
         return $repository->find( $_SESSION['logged_account_id'] );
+    }
+
+    public function getCartSize(){
+        $repository = $this->getDoctrine()->getRepository('AppBundle:CartItem');
+
+
+        return $repository->createQueryBuilder('fc')
+            ->andWhere('fc.accountId = :account')
+            ->setParameter('account', $this->getLoggedAccount()->getId())
+            ->select('SUM(fc.quantity) as fortunesPrinted')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     public function logout(){

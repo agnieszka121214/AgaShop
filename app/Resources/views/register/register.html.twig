@@ -8,20 +8,22 @@
             <p style="background: red" >{{ msg }}</p>
         {% endif %}
 
+
+
         <div class="login">
             <form action="{{ path('register') }}" method="post" >
                 <div class=" login-do" style="width: 500px;height:500px;margin: auto">
                     <div class="login-mail">
-                        <input name="name" type="text" placeholder="Name" required="">
+                        <input name="name" type="text" placeholder="Name" >
                         <i  class="glyphicon glyphicon-user"></i>
                     </div>
 
                     <div class="login-mail">
-                        <input name="email" type="text" placeholder="Email" required="">
+                        <input name="email" type="text" placeholder="Email" >
                         <i  class="glyphicon glyphicon-envelope"></i>
                     </div>
                     <div class="login-mail">
-                        <input name="password" type="password" placeholder="Password" required="">
+                        <input name="password" type="password" placeholder="Password" >
                         <i class="glyphicon glyphicon-lock"></i>
                     </div>
 

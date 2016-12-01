@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <div style="margin: 100px;">
+
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Cena</th>
+                <th>Stan</th>
+            </tr>
+            {% for o in orders %}
+                <tr>
+                    <td>{{ o.id  }}</td>
+
+                    <td>{{ o.totalPrice }} zl</td>
+                    <td>{{ o.state}} szt</td>
+
+                </tr>
+
+
+
+            {% endfor %}
+
+
+
+        </table>
+
+
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+{% endblock %}

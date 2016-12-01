@@ -17,11 +17,13 @@
         <!--- start-rate---->
         <script src="{{ asset('bundles/js/jstarbox.js') }}"></script>
         <link rel="stylesheet" href="{{ asset('bundles/css/jstarbox.css') }}" type="text/css" media="screen" charset="utf-8" />
+
     </head>
     {% block stylesheets %}{% endblock %}
     <body>
     <div class="container">
         {% include 'views/header.html.twig' %}
+
         {% block body %}{% endblock %}
         <!--{% include 'views/footer.html.twig' %}-->
         {% block javascripts %}{% endblock %}

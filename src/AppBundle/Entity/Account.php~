@@ -156,4 +156,89 @@ class Account
     {
         return $this->id;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $cartitems;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->cartitems = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add cartitem
+     *
+     * @param \AppBundle\Entity\CartItem $cartitem
+     *
+     * @return Account
+     */
+    public function addCartItem(\AppBundle\Entity\CartItem $cartitem)
+    {
+        $this->cartitems[] = $cartitem;
+
+        return $this;
+    }
+
+    /**
+     * Remove cartitem
+     *
+     * @param \AppBundle\Entity\CartItem $cartitem
+     */
+    public function removeCartItem(\AppBundle\Entity\CartItem $cartitem)
+    {
+        $this->cartitems->removeElement($cartitem);
+    }
+
+    /**
+     * Get cartitems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCartItems()
+    {
+        return $this->cartitems;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $orders;
+
+
+    /**
+     * Add order
+     *
+     * @param \AppBundle\Entity\Order $order
+     *
+     * @return Account
+     */
+    public function addOrder(\AppBundle\Entity\Order $order)
+    {
+        $this->orders[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \AppBundle\Entity\Order $order
+     */
+    public function removeOrder(\AppBundle\Entity\Order $order)
+    {
+        $this->orders->removeElement($order);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
 }

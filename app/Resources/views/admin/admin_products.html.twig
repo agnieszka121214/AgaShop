@@ -1,0 +1,66 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+
+    {% if error is not null %}
+
+        <p style="background-color: red;padding: 40px" >{{ error }}</p>
+
+    {% endif %}
+
+    <div style="margin: 100px;">
+
+        <table>
+            <tr>
+                <th>Nazwa</th>
+                <th>Kategoria</th>
+                <th>Cena</th>
+                <th>Ilość</th>
+                <th>Akcje</th>
+            </tr>
+            {% for p in products %}
+                <tr>
+                    <td>{{ p.name  }}</td>
+                    <td>{{ p.category.name }}</td>
+                    <td>{{ p.price }} zl</td>
+                    <td>{{ p.quantity}} szt</td>
+                    <td>
+
+                        <form method="post">
+                            <input formaction="{{ path('admin_product_edit_form', {'product_id':  p.id } ) }}" type="submit" value="Edytuj" />
+                            <input formaction="{{ path('admin_product_delete', {'product_id':  p.id }) }}" type="submit" value="Usuń" />
+                        </form>
+                    </td>
+
+                </tr>
+            {% endfor %}
+
+        </table>
+
+        <form method="post">
+            <input formaction="{{ path('admin_product_add') }}" type="submit" value="Dodaj" />
+        </form>
+
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+{% endblock %}

@@ -34,10 +34,18 @@ class Product
     private $price;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="quantity", type="integer", nullable=false)
+     */
+    private $quantity;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=50, nullable=false)
      */
+
     private $image;
 
     /**
@@ -192,5 +200,123 @@ class Product
     public function getId()
     {
         return $this->id;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->category = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return Product
+     */
+    public function addCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->category[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \AppBundle\Entity\Category $category
+     */
+    public function removeCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->category->removeElement($category);
+    }
+
+    /**
+     * Get category
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return Product
+     */
+    public function setCategory(\AppBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     *
+     * @return Product
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return integer
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $cartitems;
+
+
+    /**
+     * Add cartitem
+     *
+     * @param \AppBundle\Entity\CartItem $cartitem
+     *
+     * @return Product
+     */
+    public function addCartItem(\AppBundle\Entity\CartItem $cartitem)
+    {
+        $this->cartitems[] = $cartitem;
+
+        return $this;
+    }
+
+    /**
+     * Remove cartitem
+     *
+     * @param \AppBundle\Entity\CartItem $cartitem
+     */
+    public function removeCartItem(\AppBundle\Entity\CartItem $cartitem)
+    {
+        $this->cartitems->removeElement($cartitem);
+    }
+
+    /**
+     * Get cartitems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCartItems()
+    {
+        return $this->cartitems;
     }
 }

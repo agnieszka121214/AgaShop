@@ -20,5 +20,16 @@
       </options>
     </field>
     <field name="isAdmin" type="boolean" column="is_admin" nullable="false"/>
+
+    <one-to-many
+            field="cartitems"
+            target-entity="CartItem"
+            mapped-by="account" />
+
+    <one-to-many
+            field="orders"
+            target-entity="AppBundle\Entity\Order"
+            mapped-by="account" />
+
   </entity>
 </doctrine-mapping>

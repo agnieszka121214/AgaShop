@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="AppBundle\Entity\Product" table="product">
+  <entity name="AppBundle\Entity\OrderProduct" table="order_product">
+
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
@@ -9,34 +10,22 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="description" type="string" column="description" length="250" nullable="false">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
     <field name="price" type="float" column="price" precision="10" scale="0" nullable="false"/>
     <field name="quantity" type="integer" column="quantity" nullable="false"/>
-    <field name="image" type="string" column="image" length="50" nullable="false">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
-    <field name="categoryId" type="integer" column="category_id" nullable="false">
+
+    <field name="orderId" type="integer" column="order_id" nullable="false">
       <options>
         <option name="unsigned"/>
       </options>
     </field>
 
-    <many-to-one field="category"
-                 target-entity="AppBundle\Entity\Category"
-                 inversed-by="products" >
-        <join-column name="category_id" referenced-column-name="id" />
+
+    <many-to-one field="order"
+                 target-entity="AppBundle\Entity\Order"
+                 inversed-by="orderProducts" >
+        <join-column name="order_id" referenced-column-name="id" />
     </many-to-one>
 
-    <one-to-many
-            field="cartitems"
-            target-entity="CartItem"
-            mapped-by="product" />
 
   </entity>
 </doctrine-mapping>

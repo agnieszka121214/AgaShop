@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <div style="margin: 100px;">
+
+        <table>
+            <tr>
+                <th>Nazwa</th>
+                <th>Cena</th>
+                <th>Ilość</th>
+            </tr>
+            {% for c in cartItems %}
+                <tr>
+                    <td>{{ c.product.name  }}</td>
+
+                    <td>{{ c.product.price }} zl</td>
+                    <td>{{ c.quantity}} szt</td>
+                    <td>
+
+                        <form method="post">
+                            <input formaction="{{ path('delete_cart_item', {'cart_item_id':c.id}) }}" type="submit" value="Usuń" />
+                            <input formaction="{{ path('set_cart_item_size', {'cart_item_id':c.id, 'quantity':c.quantity+1}) }}" type="submit" value="+" />
+                            <input formaction="{{ path('set_cart_item_size', {'cart_item_id':c.id, 'quantity':c.quantity-1}) }}" type="submit" value="-" />
+                        </form>
+
+
+                    </td>
+
+                </tr>
+            {% endfor %}
+
+        </table>
+        <tr>
+
+            <td>
+
+                <form method="post">
+                    <input formaction="{{ path('order') }}" type="submit" value="Zamów" />
+
+                </form>
+
+
+            </td>
+
+        </tr>
+
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+{% endblock %}

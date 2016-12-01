@@ -3,10 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Account;
+use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class RegisterController extends Controller
+class RegisterController extends DefaultController
 {
 
     /**
@@ -22,6 +23,8 @@ class RegisterController extends Controller
 
 
         return $this->render('register/register.html.twig', $data);
+
+
     }
 
     /**
@@ -41,6 +44,22 @@ class RegisterController extends Controller
             $passowrd=$_POST['password'];
             //TODO walidacja parametrów
 
+            $user= new User;
+            $user->u_password=$passowrd;
+            $user->u_name=$name;
+            $user->u_email=$email;
+            $validator = $this->get('validator');
+            $errors = $validator->validate($user);
+
+            if (count($errors) > 0) {
+
+                //return "aa";
+                return $this->redirectToRoute("register_form",array( 'msg'=> $errors[0]->getMessage()  ));//"Błędnie uzupełnione pola do rejestracji!"
+
+                // $errorsString = (string) $errors;
+
+                //  return new Response($errorsString);
+            }
 
             $account = $repository->findOneBy(
                 array(
@@ -53,8 +72,9 @@ class RegisterController extends Controller
 
             if($account)
             {
+
                 //TODO wyswietlic blad jesli istnieje
-                return $this->redirectToRoute("login_form",array('msg'=>"User istnieje"));
+                return $this->redirectToRoute("login_form",array('msg'=>"Uzytkownik juz istnieje"));
             }
             else
             {
@@ -65,8 +85,10 @@ class RegisterController extends Controller
                 $account->setIsAdmin(false);
 
                 $em->persist($account);
-
+                //doctrine od tego czasu zarzadza obiektem account
                 $em->flush();
+                //doctrine przeszukuje wszystkie zarzadane obiekty by sprawdzic zy musza one zostac utrwalonew bazie
+
                 return $this->redirect("login_form"); //wykonuje akcjie login_form i zwraca to co zwraca ta akcja
             }
 
@@ -85,6 +107,6 @@ class RegisterController extends Controller
 
         $data = array();
 
-        return 0;
+        return "aaaa";
     }
 }

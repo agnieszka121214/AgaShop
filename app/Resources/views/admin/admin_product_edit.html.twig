@@ -1,0 +1,37 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+
+    <h1>Dodaj(edytuj) produktu</h1>
+    <form method="post" enctype="multipart/form-data" action="{{ path('admin_product_save') }}">
+
+        <p><input type="hidden" name="id" value="{{ product.id }}" placeholder="Id"></p>
+        <p><input type="text" name="name" value="{{ product.name }}" placeholder="Nazwa"></p>
+        <p><input type="number" name="price" value="{{ product.price }}" placeholder="Cena"></p>
+        <p><input type="number" name="quantity" value="{{ product.quantity }}" placeholder="Ilość"></p>
+        <p><input type="text" name="description" value="{{ product.description }}" placeholder="Opis"></p>
+        <p>
+            {% if product.image is empty  %}
+
+            {% else %}
+                <img  src="{{ asset( "bundles/images/" ~ product.image ) }}" height="100" width="100">
+            {% endif %}
+
+
+        <input type="file" name="fileToUpload" value="{{ product.image }}" placeholder="Zdjęcie"></p>
+        <p><select name="category_id">
+                {% for c in categories %}
+                <option value="{{ c.id }}">{{ c.name }}</option>
+
+                {% endfor %}
+            </select></p>
+
+        <p class="submit"><input type="submit" name="commit" value="Zapisz"></p>
+    </form>
+
+
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}

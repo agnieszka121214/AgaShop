@@ -20,42 +20,34 @@ class ProductController extends DefaultController
         }
 
         $em  = $this->getDoctrine()->getManager();
-        //$ProductRepository = new ProductRepository($em);
-
-
-
-        //pobieranie producktow
-        $sql= 'SELECT p.id as product_id , p.name , p.description , p.prise , p.image , p.category_id , c.name as category_name 
-              FROM `product` AS p LEFT JOIN `category` AS C ON p.category_id = c.id ';
-
-        if($category_id){
-            $sql = $sql . " WHERE c.id =" . $category_id;
-        }
-
-        $stmt = $em->getConnection()->prepare($sql);
-        $stmt->execute();
-
-        //$categories = $ProductRepository->getProducts($category_id);
-        $products = $stmt->fetchAll();
 
         //pobieranie category
-        $sql = "SELECT * FROM `category` ";
-        $stmt = $em->getConnection()->prepare($sql);
-        $stmt->execute();
 
+        $categories = $this->getDoctrine()
+            ->getRepository('AppBundle:Category')
+            ->findAll();
 
-        //$categories = $ProductRepository->getCategories();
-        $categories = $stmt->fetchAll();
-
-
-        /*$qb = $em->createQueryBuilder();
-        $qb->select('p', 'c')
+        if($category_id)
+        {$products = $em->createQueryBuilder()
+            ->select('p', 'c')
             ->from('AppBundle:Product', 'p')
-            ->leftJoin('p.category', 'c');*/
+            ->leftJoin('p.category', 'c')
+            ->where('c.id = :category_id')
+            ->setParameter('category_id', $category_id)
+            ->getQuery()
+            ->getResult();}
+        else
+        {$products = $em->createQueryBuilder()
+            ->select('p', 'c')
+            ->from('AppBundle:Product', 'p')
+            ->leftJoin('p.category', 'c')
+            ->getQuery()
+            ->getResult();}
 
-        //$this->trace($products);
+
 
         $data = array(
+            'cart_size' => $this->getCartSize(),
             'categories' => $categories,
             'products' => $products,
             'account' => $this->getLoggedAccount(),
@@ -78,18 +70,16 @@ class ProductController extends DefaultController
 
         $em  = $this->getDoctrine()->getManager();
 
-        $sql = "SELECT * FROM `product` WHERE `id` =  " + $product_id;
-        $stmt = $em->getConnection()->prepare($sql);
-        $stmt->execute();
-        $product = $stmt->fetch();
+        $product=$this->getDoctrine()
+            ->getRepository('AppBundle:Product')
+            ->find($product_id);
 
         $data = array(
             'product' => $product,
             'account' => $this->getLoggedAccount()
         );
-        return $this->render('aaaaaa', $data);
+        return $this->render('product/product.html.twig', $data);
     }
-
 
 
 }
