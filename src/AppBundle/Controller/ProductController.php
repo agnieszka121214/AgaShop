@@ -81,5 +81,7 @@ class ProductController extends DefaultController
         return $this->render('product/product.html.twig', $data);
     }
 
+    // robie 2 funkcje
+
 
 }

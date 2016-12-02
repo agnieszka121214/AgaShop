@@ -45,7 +45,7 @@
     <one-to-many
             field="orderProducts"
             target-entity="AppBundle\Entity\OrderProduct"
-            mapped-by="orderItem" />
+            mapped-by="order" />
 
     <many-to-one field="account"
                  target-entity="AppBundle\Entity\Account"

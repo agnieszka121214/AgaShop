@@ -277,4 +277,21 @@ class AdminController extends DefaultController
         $em->flush();
         return $this->redirectToRoute('admin_order');
     }
+
+    /**
+     * @Route("/admin/order/info/{order_id}", name="admin_order_info"  )
+     */
+    public function adminInfoAddress($order_id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $order = $em->getRepository('AppBundle:Order')->find($order_id);
+
+
+        $data = array(
+            'order' => $order,
+            'items' => $order->getOrderProducts(),
+            'account' => $this->getLoggedAccount()
+        );
+        return $this->render('admin/admin_address.html.twig',$data);
+    }
 }

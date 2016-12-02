@@ -52,7 +52,7 @@ class CartItemController extends DefaultController
     public function deleteCartItemAction($cart_item_id)
     {
 
-        if ($this->isAdminLogged()) {
+        if (!$this->isLogged()) {
             return $this->redirectToRoute('products');
         }
 
@@ -73,7 +73,7 @@ class CartItemController extends DefaultController
     public function setCardItemSizeAction($cart_item_id, $quantity)
     {
 
-        if ($this->isAdminLogged()) {
+        if (!$this->isLogged()) {
             return $this->redirectToRoute('products');
         }
 

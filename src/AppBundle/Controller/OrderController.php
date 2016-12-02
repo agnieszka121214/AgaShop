@@ -4,8 +4,11 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Order;
 use AppBundle\Entity\OrderProduct;
+use AppBundle\Entity\CartItem;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\Entity\OrderValidation;
+
 
 define('STATE_WATTING', 1);
 define('STATE_SEND', 2);
@@ -16,9 +19,9 @@ class OrderController extends DefaultController
 
 
     /**
-     * @Route("/order", name="order"  )
+     * @Route("/order/{msg}", name="order"  )
      */
-    public function orderAction()
+    public function orderAction($msg=null)
     {
         if (!$this->isLogged()) {
             return $this->redirectToRoute("login_form");
@@ -42,13 +45,19 @@ class OrderController extends DefaultController
         $total_price=0;
         $total_quantity=0;
 
+
+
+
         foreach( $cartItems as $cartItem ){
             $total_quantity+=$cartItem->getQuantity();
             $total_price+=$cartItem->getProduct()->getPrice()*$cartItem->getQuantity();
         }
+        //pobrać baze danych - i ustawiac tam pobrane wartosci - $cartItem->getQuantity()
+
+
 
         $data = array(
-
+            'msg' => $msg,
             'total_price' => $total_price,
             'total_quantity' => $total_quantity,
             'cartItems' => $cartItems,
@@ -58,7 +67,7 @@ class OrderController extends DefaultController
     }
 
     /**
-     * @Route("/order/checkout", name="order_checkout"  )
+     * @Route("/order_/checkout", name="order_checkout"  )
      */
     public function orderCheckoutAction()
     {
@@ -85,9 +94,10 @@ class OrderController extends DefaultController
         $total_price=0;
         $total_quantity=0;
 
-        foreach( $cartItems as $cartItem ){
-            $total_quantity+=$cartItem->getQuantity();
-            $total_price+=$cartItem->getProduct()->getPrice()*$cartItem->getQuantity();
+        foreach( $cartItems as $cartItem ) {
+            $total_quantity += $cartItem->getQuantity();
+            $total_price += $cartItem->getProduct()->getPrice() * $cartItem->getQuantity();
+
         }
 
 
@@ -96,8 +106,25 @@ class OrderController extends DefaultController
         $post_code=$_POST['post_code'];
         $street=$_POST['street'];
 
-        // TODO walidacja??????????????????????????????
+        $orderValidation= new OrderValidation();
 
+        $orderValidation->city=$city;
+        $orderValidation->post_code=$post_code;
+        $orderValidation->street=$street;
+        $orderValidation->name=$name;
+
+        //  walidacja??????????????????????????????
+        $validator = $this->get('validator');
+        $errors = $validator->validate($orderValidation);
+        if (count($errors) > 0) {
+
+            //return "aa";
+            return $this->redirectToRoute("order",array( 'msg'=> $errors[0]->getMessage()  ));//"Błędnie uzupełnione pola do rejestracji!"
+
+            // $errorsString = (string) $errors;
+
+            //  return new Response($errorsString);
+        }
 
 
 
@@ -122,6 +149,7 @@ class OrderController extends DefaultController
             $em->remove($c);
 
         }
+
 
 
 

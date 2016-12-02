@@ -1,0 +1,67 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+
+    <div style="margin: 100px;">
+
+        <table>
+
+                <tr>
+                    <th>Imię i nazwisko</th>
+                    <td>{{ order.name }}</td>
+                </tr>
+            <tr>
+                <th>Ulica</th>
+                <td>{{ order.street  }}</td>
+            </tr>
+            <tr>
+                <th>Kod pocztowy</th>
+                <td>{{ order.postCode }}</td>
+            </tr>
+            <tr>
+                <th>Miasto</th>
+                <td>{{ order.city }}</td>
+            </tr>
+
+        </table>
+
+        <table>
+            <tr>
+                <th>nazwa produktu</th>
+                <th>Cena</th>
+                <th>Ilość</th>
+            </tr>
+            {% for p in items %}
+                <tr>
+                    <td>{{ p.name  }}</td>
+                    <td>{{ p.price }} zl</td>
+                    <td>{{ p.quantity}} szt</td>
+                    <td>
+                </tr>
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block body %}
 
@@ -30,6 +30,7 @@
                         </select></p>
 
                     <p class="submit"><input type="submit" name="commit" value="Zapisz"></p>
+                    <p class="submit"><input type="submit" name="commit" formaction="{{ path('admin_order_info', {'order_id': o.id }) }}" value="Więcej info"></p>
 
                 </form></td>
                 </tr>

@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User
 {
     /**
-     * @Assert\NotBlank( message= "AAAAAAaaaaaaaaaa" )
+     * @Assert\NotBlank( message= "Uzupełnij wszystkie pola" )
      */
     public $u_name;
     // * @Assert\MinLength(3)
@@ -31,7 +31,7 @@ class User
 
     /**
      * @Assert\Email(
-     *     message = "The email '{{ value }}' is not a valid email.",
+     *     message = "Błędny email.",
      *     checkMX = true
      * )
      */

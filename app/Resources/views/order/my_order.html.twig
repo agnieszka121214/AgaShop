@@ -14,9 +14,21 @@
             {% for o in orders %}
                 <tr>
                     <td>{{ o.id  }}</td>
-
                     <td>{{ o.totalPrice }} zl</td>
-                    <td>{{ o.state}} szt</td>
+                    <td>
+                        <p>
+                            {% if o.state ==1 %}
+                                Oczekuje na realizacje
+                            {% elseif  o.state ==2 %}
+                                W trakcie realizacji
+                            {%  else  %}
+                                Wyslane
+                            {% endif %}
+                        </p>
+
+
+
+                    </td>
 
                 </tr>
 
